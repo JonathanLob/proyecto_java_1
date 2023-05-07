@@ -1,0 +1,96 @@
+USE sistema_1
+SELECT * FROM vendedor
+SELECT * FROM cliente
+SELECT * FROM producto
+SELECT * FROM ventas
+SELECT * FROM detalle_ventas
+
+----- CREAR BD Y USAR
+CREATE DATABASE sistema_1;
+USE sistema_1;
+
+----- CREAR TABLAS
+CREATE TABLE VENDEDOR
+(
+IdVendedor INT(11),
+Dni VARCHAR(8),
+Nombres VARCHAR(100),
+Telefono VARCHAR(9),
+Estado VARCHAR(1),
+USER VARCHAR(8),
+PRIMARY KEY (IdVendedor)
+);
+-----
+CREATE TABLE CLIENTE
+(
+IdCliente INT AUTO_INCREMENT,
+Dni VARCHAR(8),
+Nombres VARCHAR(100),
+Direccion VARCHAR(100),
+Estado VARCHAR(1),
+PRIMARY KEY(IdCliente)
+);
+-----
+CREATE TABLE PRODUCTO
+(
+IdProducto INT(11),
+Nombres VARCHAR(100),
+Precio DOUBLE,
+Stock INT(11),
+Estado VARCHAR(1),
+PRIMARY KEY(IdProducto)
+);
+-----
+CREATE TABLE VENTAS
+(
+IdVentas INT AUTO_INCREMENT,
+Cliente_IdCliente INT,
+Vendedor_IdVendedor INT,
+NumeroVentas VARCHAR(100),
+FechaVentas DATE,
+Monto DOUBLE,
+Estado VARCHAR(1),
+PRIMARY KEY(IdVentas),
+FOREIGN KEY(Cliente_IdCliente) REFERENCES CLIENTE(IdCliente),
+FOREIGN KEY(Vendedor_IdVendedor) REFERENCES VENDEDOR(IdVendedor)
+);
+-----
+CREATE TABLE DETALLE_VENTAS
+(
+IdDetalleVentas INT AUTO_INCREMENT,
+Ventas_IdVentas INT(11),
+Producto_IdProducto INT(11),
+Cantidad INT(11),
+PrecioVenta DOUBLE,
+PRIMARY KEY(IdDetalleVentas),
+FOREIGN KEY(Ventas_IdVentas) REFERENCES VENTAS(IdVentas),
+FOREIGN KEY(Producto_IdProducto) REFERENCES PRODUCTO(IdProducto)
+);
+
+
+
+SELECT * FROM CLIENTE;
+SELECT * FROM VENDEDOR;
+SELECT * FROM PRODUCTO;
+SELECT * FROM VENTAS;
+SELECT * FROM DETALLE_VENTAS
+
+INSERT INTO CLIENTE VALUES (1,'12345678', 'Juan Valdes', 'Callao 321', '1');
+INSERT INTO CLIENTE VALUES (2,'12345677', 'Luis Quinto', 'Callao 456', '1');
+INSERT INTO CLIENTE VALUES (3,'12345688', 'Carlos Segundo', 'Callao 777', '1');
+INSERT INTO CLIENTE VALUES (4,'12345699', 'Luis primero', 'Callao 320', '1');
+INSERT INTO CLIENTE VALUES (5,'12345610', 'Juan Segundo', 'Callao 300', '1');
+
+INSERT INTO VENDEDOR VALUES (01,'33599564', 'Akiles Marvel', '999888777', '1','akm123');
+
+INSERT INTO PRODUCTO VALUES (3001,'teclado', 50, 100, '1');
+INSERT INTO PRODUCTO VALUES (3002,'Mouse', 40, 130, '1');
+INSERT INTO PRODUCTO VALUES (3003,'Monitor', 250, 50, '1');
+INSERT INTO PRODUCTO VALUES (3004,'Parlantes', 150, 70, '1');
+
+--Detalles adicionales para volver a iniciar ventas, productos Y detalle ventas
+
+DELETE FROM VENTAS;
+DELETE FROM DETALLE_VENTAS;
+DELETE FROM PRODUCTO;
+ALTER TABLE VENTAS AUTO_INCREMENT = 1;
